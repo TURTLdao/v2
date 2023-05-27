@@ -45,6 +45,11 @@ export default function Page() {
       <title>
         $FROGGIE | TurtleDAO
       </title>
+      <meta
+        name="description"
+        content="TurtleDAO's powerful dashboard for authentic token discovery"
+      />
+      <link rel="icon" href="/favicon.ico" />
     </Head>
 
     <ThemeProvider theme={theme}>
