@@ -86,6 +86,11 @@ export default function Page() {
       <title>
         AAID | TurtleDAO
       </title>
+      <meta
+        name="description"
+        content="TurtleDAO's powerful dashboard for authentic token discovery"
+      />
+      <link rel="icon" href="/favicon.ico" />
     </Head>
     <ThemeProvider theme={theme}>
     <Box
