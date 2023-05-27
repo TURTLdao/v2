@@ -79,11 +79,16 @@ export default function Page() {
   return (
     <>
     <ThemeProvider theme={theme}>
-      <Head>
-        <title>
-          Login | Devias Kit
-        </title>
-      </Head>
+    <Head>
+      <title>
+        Login | TurtleDAO
+      </title>
+      <meta
+        name="description"
+        content="TurtleDAO's powerful dashboard for authentic token discovery"
+      />
+      <link rel="icon" href="https://raw.githubusercontent.com/TURTLdao/TurtleDAO-website/main/public/favicon.ico" />
+    </Head>
       <Box
         sx={{
           backgroundColor: '#1d1d1d',
