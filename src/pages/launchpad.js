@@ -44,17 +44,6 @@ const companies = [
     logo: '/token-images/turtl.png',
   },
   {
-    title: 'AdaKonda Coin',
-    ticker: '$KONDA',
-    category: 'meme',
-    description: 'To infinity and beyonda!',
-    page: '',
-    price: '0.00000000',
-    ready: false,
-    logo: '/token-images/konda.png',
-    //price: fetchMiniswapLastPriceData('79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a146524f47474945'),
-  },
-  {
     title: 'Future Project',
     ticker: '',
     category: '',
