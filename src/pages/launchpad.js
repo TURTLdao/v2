@@ -90,7 +90,7 @@ export default function Page() {
         name="description"
         content="TurtleDAO's powerful dashboard for authentic token discovery"
       />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="https://raw.githubusercontent.com/TURTLdao/TurtleDAO-website/main/public/favicon.ico" />
     </Head>
     <ThemeProvider theme={theme}>
     <Box
