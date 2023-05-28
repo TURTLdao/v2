@@ -7,8 +7,7 @@ import { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { fetchMinswapFroggie } from 'src/api/fetch-calls';
 
-export const FroggiePriceCard = (props) => {
-  const { sx } = props;
+export const FroggiePriceCard = ({ lastPrice, sx }) => {
 
   const theme = createTheme({
     palette: {
@@ -18,24 +17,12 @@ export const FroggiePriceCard = (props) => {
     }
   });
 
-  const [froggiePrice, setPrice] = useState(null);
+  //const [froggiePrice, setPrice] = useState(null);
+  //const [price, setLastPrice] = useState(0);
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetchMinswapFroggie();
-
-      if (response && response.last_price) {
-        const { last_price: froggiePrice } = response;
-  
-        setPrice(froggiePrice);
-        console.log('Froggie Price:', froggiePrice);
-      } else {
-        console.log('Last price not available.');
-      }
-    }
-
-    fetchData();
-  }, []);
+  //useEffect(() => {
+  //  setLastPrice(lastPrice);
+  //}, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -60,7 +47,7 @@ export const FroggiePriceCard = (props) => {
             <Typography variant="h5"
               color="white"
             >
-              ₳ {froggiePrice}
+              ₳ {lastPrice}
             </Typography>
           </Stack>
           <Avatar
@@ -79,5 +66,6 @@ export const FroggiePriceCard = (props) => {
 };
 
 FroggiePriceCard.prototypes = {
-  sx: PropTypes.object
+  sx: PropTypes.object,
+  lastPrice: PropTypes.object 
 };
