@@ -123,7 +123,7 @@ export default function Page({ lastPrice }) {
               lg={8}
             >
               <FroggiePie
-                chartSeries={[43.48, 14.49, 27.54, 14.49, 7.25, 25.75]}
+                chartSeries={[32.72, 10.89, 20.72, 10.89, 5.46, 19.32]}
                 labels={['LP', 'Airdrops', 'OTC', 'Distribution', 'More LP', 'Development']}
                 sx={{ height: '100%', marginRight: '10px' }}
               />
