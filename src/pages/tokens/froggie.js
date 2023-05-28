@@ -20,8 +20,31 @@ import { FroggieMarketcapCard } from 'src/sections/launchpad/cards/froggie/frogg
 import { FroggiePooledCard } from 'src/sections/launchpad/cards/froggie/froggie-pooled';
 import { FroggiePriceCard } from 'src/sections/launchpad/cards/froggie/froggie-price';
 import { BuyFroggie } from 'src/sections/launchpad/buy/froggie';
+import { getLastPrice } from 'src/api/fetch-calls';
 
-export default function Page() {
+export async function getStaticProps() {
+  const baseId = '79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a146524f47474945_lovelace';
+
+  try {
+    const price = await getLastPrice(baseId);
+
+    return {
+      props: {
+        lastPrice: price,
+      },
+    };
+  } catch (error) {
+    console.error('Error:', error);
+
+    return {
+      props: {
+        lastPrice: 0,
+      },
+    };
+  }
+}
+
+export default function Page({ lastPrice }) {
 
   useEffect(() => {
     async function fetchData() {
@@ -30,6 +53,8 @@ export default function Page() {
 
     fetchData();
   }, []);
+
+  const formatted_price = Number(lastPrice).toFixed(8);
 
   const theme = createTheme({
     palette: {
@@ -45,11 +70,6 @@ export default function Page() {
       <title>
         $FROGGIE | TurtleDAO
       </title>
-      <meta
-        name="description"
-        content="TurtleDAO's powerful dashboard for authentic token discovery"
-      />
-      <link rel="icon" href="https://raw.githubusercontent.com/TURTLdao/TurtleDAO-website/main/public/favicon.ico" />
     </Head>
 
     <ThemeProvider theme={theme}>
@@ -67,7 +87,7 @@ export default function Page() {
           spacing={3}
         >
           <Grid xs={12} sm={6} lg={3} >
-            <FroggiePriceCard sx={{ height: '100%', marginRight: '10px' }} />
+            <FroggiePriceCard sx={{ height: '100%', marginRight: '10px' }} lastPrice={formatted_price} />
           </Grid>
 
           <Grid xs={12} sm={6} lg={3} >
@@ -103,7 +123,7 @@ export default function Page() {
               lg={8}
             >
               <FroggiePie
-                chartSeries={[32.72, 10.89, 20.72, 10.89, 5.46, 19.32]}
+                chartSeries={[43.48, 14.49, 27.54, 14.49, 7.25, 25.75]}
                 labels={['LP', 'Airdrops', 'OTC', 'Distribution', 'More LP', 'Development']}
                 sx={{ height: '100%', marginRight: '10px' }}
               />
