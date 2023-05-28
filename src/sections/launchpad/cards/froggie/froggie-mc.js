@@ -7,9 +7,7 @@ import { useEffect, useState } from 'react';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-export const FroggieMarketcapCard = (props) => {
-  const { sx } = props;
-  
+export const FroggieMarketcapCard =  ({ sx, lastPrice }) => {
   const theme = createTheme({
     palette: {
       primary: {
@@ -17,10 +15,12 @@ export const FroggieMarketcapCard = (props) => {
       }
     }
   });
-  
-  const price = '2,516,554';
-  const mc =   price;
-  
+
+  const supply = 69000000000;
+  const u_mc = Number(supply * lastPrice).toFixed(0);
+  const formatter = new Intl.NumberFormat('en-US');
+  const mc = formatter.format(u_mc);
+
   return (
     <ThemeProvider theme={theme}>
     <Card sx={{
@@ -53,5 +53,6 @@ export const FroggieMarketcapCard = (props) => {
 };
 
 FroggieMarketcapCard.prototypes = {
-  sx: PropTypes.object
+  sx: PropTypes.object,
+  lastPrice: PropTypes.object
 };
