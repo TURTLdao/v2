@@ -30,7 +30,7 @@ export async function getStaticProps() {
 
     return {
       props: {
-        lastPrice: price,
+        froggie_price: price,
       },
     };
   } catch (error) {
@@ -38,13 +38,13 @@ export async function getStaticProps() {
 
     return {
       props: {
-        lastPrice: 0,
+        froggie_price: 0,
       },
     };
   }
 }
 
-export default function Page({ lastPrice }) {
+export default function Page({ froggie_price }) {
 
   useEffect(() => {
     async function fetchData() {
@@ -54,7 +54,7 @@ export default function Page({ lastPrice }) {
     fetchData();
   }, []);
 
-  const formatted_price = Number(lastPrice).toFixed(8);
+  const formatted_price = Number(froggie_price).toFixed(8);
 
   const theme = createTheme({
     palette: {
@@ -91,7 +91,7 @@ export default function Page({ lastPrice }) {
           </Grid>
 
           <Grid xs={12} sm={6} lg={3} >
-            <FroggieMarketcapCard sx={{ height: '100%', marginRight: '10px' }} />
+            <FroggieMarketcapCard sx={{ height: '100%', marginRight: '10px' }} lastPrice={froggie_price} />
           </Grid>
 
           <Grid xs={12} sm={6} lg={3} >
