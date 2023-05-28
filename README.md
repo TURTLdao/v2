@@ -4,8 +4,8 @@
 - [x] Live Projects Twitter Feed
 - [x] Token Bios, Profile, Information and Events
 - [x] Distribution Piecharts
-- [ ] Fetch Marketcap
-- [ ] Work out 1 ADA to Token
+- [x] Work out Marketcap
+- [x] Work out 1 ADA to Token
 - [ ] Implement Price Charts
 
 ### Current Tokens
