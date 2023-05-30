@@ -6,7 +6,7 @@ import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { TwitterTimelineEmbed } from 'react-twitter-embed';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { FroggieNFTs } from 'src/sections/launchpad/showcase/froggie-nfts';
+import { BuyVerified } from 'src/sections/launchpad/buy/buy-verified';
 
 import { AdaCompareCard } from 'src/sections/launchpad/market-cards/compare';
 import { PriceCard } from 'src/sections/launchpad/market-cards/price';
@@ -14,21 +14,20 @@ import { TokenEvents } from 'src/sections/launchpad/events';
 import { Pie } from 'src/sections/launchpad/charts/distribution';
 import { Bio } from 'src/sections/launchpad/profile/bio';
 import { Profile } from 'src/sections/launchpad/profile/profile';
-import { BuyVerified } from 'src/sections/launchpad/buy/buy-verified';
 
 import { getLastPrice } from 'src/api/fetch-calls';
 
-import FroggieInformation from 'src/tokens/froggie';
+import CatskyInformation from 'src/tokens/catsky';
 
 export async function getStaticProps() {
-  const baseId = '79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a146524f47474945_lovelace';
+  const baseId = '9b426921a21f54600711da0be1a12b026703a9bd8eb9848d08c9d921434154534b59_lovelace';
 
   try {
     const price = await getLastPrice(baseId);
 
     return {
       props: {
-        froggie_price: price
+        catsky_price: price
       },
     };
   } catch (error) {
@@ -36,13 +35,13 @@ export async function getStaticProps() {
 
     return {
       props: {
-        froggie_price: 0
+        catsky_price: 0
       },
     };
   }
 }
 
-export default function Page({ froggie_price }) {
+export default function Page({ catsky_price }) {
   const {
     future_events,
     current_events,
@@ -57,7 +56,7 @@ export default function Page({ froggie_price }) {
     verfied_buy_information,
     token_bio_information,
     token_profile_information
-  } = FroggieInformation(froggie_price);
+  } = CatskyInformation(catsky_price);
 
   const theme = createTheme({
     palette: {
@@ -71,7 +70,7 @@ export default function Page({ froggie_price }) {
   <>
     <Head>
       <title>
-        $FROGGIE | TurtleDAO
+        $CATSKY | TurtleDAO
       </title>
     </Head>
 
@@ -98,7 +97,7 @@ export default function Page({ froggie_price }) {
           </Grid>
 
           <Grid xs={12} sm={6} lg={3} >
-            <AdaCompareCard sx={{ height: '100%', marginRight: '10px' }} tokenPrice={froggie_price} ticker={ticker} />
+            <AdaCompareCard sx={{ height: '100%', marginRight: '10px' }} tokenPrice={catsky_price} ticker={ticker} />
           </Grid>
           
         </Grid>
@@ -123,13 +122,16 @@ export default function Page({ froggie_price }) {
             <Grid
               xs={12}
               md={6}
-              lg={8}
+              lg={4}
             >
-              <Pie
-                chartSeries={[38.18, 10.89, 20.72, 10.89, 19.32]}
-                labels={['LP', 'Airdrops', 'OTC', 'Distribution', 'Development']}
-                sx={{ height: '100%', marginRight: '10px' }}
-              />
+              <Bio sx={{ minWidth: "100%" }} token_bio_information={token_bio_information} />
+            </Grid>
+            <Grid
+              xs={12}
+              md={6}
+              lg={4}
+            >
+              <BuyVerified sx={{ minWidth: "100%" }} verfied_buy_information={verfied_buy_information} />
             </Grid>
           </Grid>
         </div>
@@ -144,47 +146,28 @@ export default function Page({ froggie_price }) {
           >
             <Grid
               xs={12}
-              md={6}
-              lg={4}
+              md={8}
+              lg={8}
               
             >
-            <ThemeProvider theme={theme}>
-            <Card sx={{
-              backgroundColor: '#2d2d2d',
-              border: "2px solid #4CAF50"
-            }}>
-              <CardContent>
-              <TwitterTimelineEmbed
-                sourceType="profile"
-                screenName="Froggieo_"
-                theme='dark'
-                options={{
-                  height: 600,
-                }}
-              />
-              </CardContent>
+              <Card sx={{
+                backgroundColor: '#2d2d2d',
+                border: "2px solid #4CAF50"
+              }}>
+                <CardContent>
+                  <TwitterTimelineEmbed
+                    sourceType="profile"
+                    screenName="Catskycrypto"
+                    theme='dark'
+                    options={{
+                      height: 700,
+                    }}
+                  />
+                </CardContent>
               </Card>
-              </ThemeProvider>
-              <Divider/>
-              <Divider/>
-              <Divider/>
-              <Divider/>
-              <FroggieNFTs sx={{ height: '100%', marginRight: '10px' }} />
+
             </Grid>
 
-            <Grid
-              xs={12}
-              md={6}
-              lg={4}
-            >
-              <Bio sx={{ minWidth: "100%" }} token_bio_information={token_bio_information} />
-              <Divider/>
-              <Divider/>
-              <Divider/>
-              <Divider/>
-              
-              <BuyVerified sx={{ minWidth: "100%" }} verfied_buy_information={verfied_buy_information} />
-            </Grid>
             <Grid
               xs={12}
               md={6}
@@ -202,26 +185,7 @@ export default function Page({ froggie_price }) {
 
           </Grid>
         </div>
-        
-        
 
-        <div>
-          <Grid
-            container
-            spacing={3}
-            sx={{
-              mt: 2
-            }}
-          >
-            <Grid 
-              xs={12}
-              md={6}
-              lg={4}
-            >
-            </Grid>
-
-          </Grid>
-        </div>
       </Container>
     </Box></ThemeProvider>
   </>

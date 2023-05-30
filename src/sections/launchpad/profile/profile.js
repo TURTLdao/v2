@@ -1,39 +1,28 @@
 import { Avatar, Box, Button, Card, CardActions, CardContent,
-    Divider, Typography, IconButton, SvgIcon
-  } from '@mui/material';
+  Divider, Typography, IconButton, SvgIcon
+} from '@mui/material';
   
-  import GlobeAltIcon from '@heroicons/react/24/solid/GlobeAltIcon';
-  import DocumentDuplicateIcon from '@heroicons/react/24/solid/DocumentDuplicateIcon';
-    
-  import { createTheme, ThemeProvider } from '@mui/material/styles';
+import PropTypes from 'prop-types';
+import DocumentDuplicateIcon from '@heroicons/react/24/solid/DocumentDuplicateIcon';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
   
-    const token = 
-    {
-      avatar: '/token-images/turtl.png',
-      name: 'Turtle Token',
-      supply: '500,000,000',
-      ticker: '$TURTL',
-      policy_id: ' ',
-      fingerprint: ' ',
-      governance_wallets: ['$turtledao', ' ']
-    };
-    
-    export const TurtleProfileCard = (text) => {
-    
-      const theme = createTheme({
-        palette: {
-          primary: {
-            main: "#4CAF50"
-          }
-        }
-      });
-    
-      return (
-        <ThemeProvider theme={theme}>
-        <Card sx={{
-          backgroundColor: '#2d2d2d',
-          border: "2px solid #4CAF50"
-        }}>
+export const Profile = ({ token_profile_information }) => {
+  
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#4CAF50"
+      }
+    }
+  });
+  
+  return (
+    <ThemeProvider theme={theme}>
+      <Card sx={{
+        backgroundColor: '#2d2d2d',
+        border: "2px solid #4CAF50"
+      }}>
+
           <CardContent>
             <Box
               sx={{
@@ -43,7 +32,7 @@ import { Avatar, Box, Button, Card, CardActions, CardContent,
               }}
             >
               <Avatar
-                src={token.avatar}
+                src={token_profile_information.avatar}
                 sx={{
                   height: 80,
                   mb: 2,
@@ -56,21 +45,21 @@ import { Avatar, Box, Button, Card, CardActions, CardContent,
                 variant="h5"
                 color="primary.main"
               >
-                {token.name}
+                {token_profile_information.name}
               </Typography>
     
               <Typography
                 color={'white'}
                 variant="body2"
               >
-                <b>Total Supply:</b> {token.supply}
+                <b>Total Supply:</b> {token_profile_information.supply}
               </Typography>
     
               <Typography
                 color={'white'}
                 variant="body2"
               >
-                <b>Ticker:</b> {token.ticker}
+                <b>Ticker:</b> {token_profile_information.ticker}
               </Typography>
               </Box>
     
@@ -93,8 +82,8 @@ import { Avatar, Box, Button, Card, CardActions, CardContent,
                 color={'white'}
                 variant="body2"
               >
-                {`${token.policy_id.slice(0, 8)}...${token.policy_id.slice(-8)}`}
-              <IconButton onClick={() => navigator.clipboard.writeText(token.policy_id)} sx={{ ml: 1 }}>
+                {`${token_profile_information.policy_id.slice(0, 8)}...${token_profile_information.policy_id.slice(-8)}`}
+                <IconButton onClick={() => navigator.clipboard.writeText(token_profile_information.policy_id)} sx={{ ml: 1 }}>
                 <SvgIcon fontSize="small" sx={{ color: 'primary.main' }}>
                   <DocumentDuplicateIcon />
                 </SvgIcon>
@@ -111,9 +100,9 @@ import { Avatar, Box, Button, Card, CardActions, CardContent,
                 color={'white'}
                 variant="body2"
               >
-                {`${token.fingerprint.slice(0, 8)}...${token.fingerprint.slice(-8)}`}
+                {`${token_profile_information.fingerprint.slice(0, 8)}...${token_profile_information.fingerprint.slice(-8)}`}
     
-                <IconButton onClick={() => navigator.clipboard.writeText(token.fingerprint)} sx={{ ml: 1 }}>
+                <IconButton onClick={() => navigator.clipboard.writeText(token_profile_information.fingerprint)} sx={{ ml: 1 }}>
                   <SvgIcon fontSize="small" sx={{ color: 'primary.main' }}>
                     <DocumentDuplicateIcon />
                   </SvgIcon>
@@ -130,9 +119,9 @@ import { Avatar, Box, Button, Card, CardActions, CardContent,
                 color={'white'}
                 variant="body2"
               >
-                {token.governance_wallets[0]}
+                {token_profile_information.governance_wallets[0]}
     
-                <IconButton onClick={() => navigator.clipboard.writeText(token.governance_wallets[0])} sx={{ ml: 1 }}>
+                <IconButton onClick={() => navigator.clipboard.writeText(token_profile_information.governance_wallets[1])} sx={{ ml: 1 }}>
                   <SvgIcon fontSize="small" sx={{ color: 'primary.main' }}>
                     <DocumentDuplicateIcon />
                   </SvgIcon>
@@ -146,12 +135,19 @@ import { Avatar, Box, Button, Card, CardActions, CardContent,
             <Button
               fullWidth
               variant="text"
+              target='_blank'
+              href={token_profile_information.cardano_scan}
             >
               Cardano Scan
             </Button>
           </CardActions>
-        </Card></ThemeProvider>
-      );
-    };
-    
-    
+
+      </Card>
+    </ThemeProvider>
+  );
+};
+
+Profile.prototypes = {
+  sx: PropTypes.object,
+  token_profile_information: PropTypes.string.isRequired,
+};

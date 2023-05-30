@@ -1,26 +1,10 @@
 import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader,
-    IconButton, Divider, Stack, SvgIcon, Typography
-  } from '@mui/material';
-    
-  import GlobeAltIcon from '@heroicons/react/24/solid/GlobeAltIcon';
-  
+  IconButton, Divider, Stack, SvgIcon, Typography
+} from '@mui/material';
+import PropTypes from 'prop-types';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-  const token = 
-  {
-    avatar: '/token-images/froggie.png',
-    name: 'Froggie Koin',
-    city: '69,000,000,000',
-    timezone: '$FROGGIE',
-    jobTitle: 'Senior Developer',
-  };
-  
-    export const FroggieBio = () => {
-    
-      const handleClick = () => {
-    
-      };
-    
+export const Bio = ({ token_bio_information }) => {
   const theme = createTheme({
     palette: {
       primary: {
@@ -28,16 +12,16 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
       }
     }
   });
-
-      return (
-        <ThemeProvider theme={theme}>
+  
+  return (
+    <ThemeProvider theme={theme}>
       <Card sx={{
         backgroundColor: '#2d2d2d',
         border: "2px solid #4CAF50"
       }}>
       <CardHeader
         sx={{ color: 'primary.main' }}
-        title="About Froggie Koin"
+        title={"About " + token_bio_information.coin_name}
         action={(
           <div>
           </div>
@@ -54,24 +38,37 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
           >
             <Typography
               color="white"
-              variant="body1"
+              variant="caption"
             >
-              Froggie is here for everyone. Froggie is the new wave. Join us in the pond.
+              {token_bio_information.coin_motto}
             </Typography>
+
             <Typography
               color="white"
               variant="body1"
               sx={{ marginBottom: 3 }}
             >
-              <i>Froggie's are life, Froggie's are love and we want Froggie's to stay.</i>
+              {token_bio_information.coin_paragraph_1}
             </Typography>
-              <img src='https://github.com/TURTLdao/TURTL-images/blob/main/1.png?raw=true'
+
+            {token_bio_information.coin_paragraph_2 ? (
+              <Typography
+                color="white"
+                variant="body1"
+                sx={{ marginBottom: 3 }}
+              >
+                {token_bio_information.coin_paragraph_2}
+              </Typography>
+            ) : null}
+
+            {token_bio_information.coin_about_image ? (
+              <img src={token_bio_information.coin_about_image}
                 style={{
                   height: 200,
                   mb: 2,
-                  width: 200
                 }}
               />
+            ) : null}
           </Box>
         </CardContent>
     
@@ -83,13 +80,17 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
               fullWidth='true'
               variant="contained"
               target='_blank'
-              href='https://froggies.vercel.app/'
+              href={token_bio_information.website_link}
             >
-                $FROGGIE Website
+                {token_bio_information.ticker} Website
             </Button>
         </CardActions>
-      </Card></ThemeProvider>
-    );
-    };
-    
-    
+      </Card>
+    </ThemeProvider>
+  );
+};
+
+Bio.prototypes = {
+  sx: PropTypes.object,
+  token_bio_information: PropTypes.string.isRequired,
+};

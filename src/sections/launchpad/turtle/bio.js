@@ -1,22 +1,10 @@
 import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, Container,
     IconButton, Divider, Stack, SvgIcon, Typography
   } from '@mui/material';
-    
-  import GlobeAltIcon from '@heroicons/react/24/solid/GlobeAltIcon';
-  import DocumentDuplicateIcon from '@heroicons/react/24/solid/DocumentDuplicateIcon';
- 
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-  const token = 
-  {
-    avatar: '/token-images/froggie.png',
-    name: 'Froggie Koin',
-    city: '69,000,000,000',
-    timezone: '$FROGGIE',
-    jobTitle: 'Senior Developer',
-  };
-   
-    export const TurtleBio = () => {
+export const TurtleBio = () => {
     
       const handleClick = () => {
     

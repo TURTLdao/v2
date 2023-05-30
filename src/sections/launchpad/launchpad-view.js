@@ -8,8 +8,6 @@ import { ArrowRightIcon } from "@heroicons/react/24/solid";
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-
-
 export const LaunchpadView = (props) => {
   const { company } = props;
   
@@ -55,6 +53,16 @@ export const LaunchpadView = (props) => {
         >
           {company.title}
         </Typography>
+
+        <Stack
+          alignItems="center"
+          spacing={1}
+        >
+          <Button>
+            {company.category}
+          </Button>
+        </Stack>
+
         <Typography
           align="center"
           variant="subtitle1"

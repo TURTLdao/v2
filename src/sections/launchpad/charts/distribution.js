@@ -15,6 +15,8 @@ import {
 import { Chart } from 'src/components/chart';
 import SavingsIcon from '@mui/icons-material/Savings';
 import PaymentsIcon from '@mui/icons-material/Payments';
+import { Scrollbar } from 'src/components/scrollbar';
+
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -82,7 +84,7 @@ const iconMap = {
   )
 };
 
-export const FroggiePie = (props) => {
+export const Pie = (props) => {
   const { chartSeries, labels, sx } = props;
   const chartOptions = useChartOptions(labels);
 
@@ -101,6 +103,17 @@ export const FroggiePie = (props) => {
         border: "2px solid #4CAF50"
     }}>
       <CardHeader sx={{ color: "primary.main" }} title="Token Distribution" />
+      <Scrollbar
+        sx={{
+          height: 500,
+            '& .simplebar-content': {
+              height: '100%'
+            },
+            '& .simplebar-scrollbar:before': {
+              background: 'neutral.400'
+            }
+        }}>
+
       <CardContent sx={{ background: ' ' }}>
         <Chart
           height={300}
@@ -146,12 +159,12 @@ export const FroggiePie = (props) => {
             );
           })}
         </Stack>
-      </CardContent>
+      </CardContent></Scrollbar>
     </Card></ThemeProvider>
   );
 };
 
-FroggiePie.propTypes = {
+Pie.propTypes = {
   chartSeries: PropTypes.array.isRequired,
   labels: PropTypes.array.isRequired,
   sx: PropTypes.object

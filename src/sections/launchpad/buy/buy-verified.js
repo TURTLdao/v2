@@ -15,11 +15,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
     jobTitle: 'Senior Developer',
   };
   
-    export const BuyFroggie = () => {
+export const BuyVerified = ({ verfied_buy_information }) => {
     
-      const handleClick = () => {
+    const handleClick = () => {
     
-      };
+    };
     
   const theme = createTheme({
     palette: {
@@ -37,7 +37,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
       }}>
       <CardHeader
         sx={{ color: 'primary.main' }}
-        title="How to Buy $FROGGIE"
+        title={"How to Buy " + verfied_buy_information.ticker}
         action={(
           <div>
           </div>
@@ -56,7 +56,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
               color="white"
               variant="caption"
             >
-              Easy guide to buying $FROGGIE safe.
+              Easy guide to buying {verfied_buy_information.ticker} safe.
             </Typography>
 
             <Card sx={{
@@ -81,7 +81,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
             </Typography>
             <Typography variant="body2"
               color="white">
-              Download Eternl or your wallet of choice that support the Cardano blockchain $ADA.
+              Download Eternl or your wallet of choice that support the Cardano blockchain ₳ADA.
             </Typography>
           </Stack>
         </Stack>
@@ -139,7 +139,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
             <Typography variant="body2"
               color="white">
               Go to app.minswap.org in your the browser or inside your Eternl app.
-              Connect your wallet. Because $FROGGIE is a verified token on Minswap, you can select $FROGGIE from the list, and confirm.
+              Connect your wallet. Because {verfied_buy_information.ticker} is a verified token on Minswap, you can select {verfied_buy_information.ticker} from the list, and confirm.
               When Eternl prompts you for a wallet signature, sign.
             </Typography>
           </Stack>
@@ -158,13 +158,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
               fullWidth='true'
               variant="contained"
               target='_blank'
-              href='https://app.minswap.org/swap?currencySymbolA=&tokenNameA=&currencySymbolB=79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a1&tokenNameB=46524f47474945'
+              href={verfied_buy_information.buy_link}
             >
                 Minswap
             </Button>
         </CardActions>
       </Card></ThemeProvider>
     );
-    };
+};
     
     

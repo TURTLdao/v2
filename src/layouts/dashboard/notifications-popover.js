@@ -6,6 +6,7 @@ import { useAuth } from 'src/hooks/use-auth';
 
 import { Avatar, Card, CardContent, Stack, SvgIcon} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { maxWidth } from '@mui/system';
 
 export const NotificationsPopover = (props) => {
   const { anchorEl, onClose, open } = props;
@@ -39,7 +40,7 @@ export const NotificationsPopover = (props) => {
       }}
       onClose={onClose}
       open={open}
-      PaperProps={{ sx: { width: 650, background: '#1d1d1d', border: "2px solid #4CAF50" } }}
+      PaperProps={{ sx: { maxWidth: 650, background: '#1d1d1d', border: "2px solid #4CAF50" } }}
     >
     <Box
       sx={{
@@ -76,7 +77,8 @@ export const NotificationsPopover = (props) => {
           sx={{
             alignItems: 'center',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            maxWidth: '100%'
           }}
         >
           <Typography

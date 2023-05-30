@@ -6,8 +6,6 @@ import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { TwitterTimelineEmbed } from 'react-twitter-embed';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { FroggieNFTs } from 'src/sections/launchpad/showcase/froggie-nfts';
-
 import { AdaCompareCard } from 'src/sections/launchpad/market-cards/compare';
 import { PriceCard } from 'src/sections/launchpad/market-cards/price';
 import { TokenEvents } from 'src/sections/launchpad/events';
@@ -18,17 +16,17 @@ import { BuyVerified } from 'src/sections/launchpad/buy/buy-verified';
 
 import { getLastPrice } from 'src/api/fetch-calls';
 
-import FroggieInformation from 'src/tokens/froggie';
+import KondaInformation from 'src/tokens/konda';
 
 export async function getStaticProps() {
-  const baseId = '79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a146524f47474945_lovelace';
+  const baseId = '501dd5d2fbab6af0a26b1421076ff3afc4d5a34d6b3f9694571116ea4b4f4e4441_lovelace';
 
   try {
     const price = await getLastPrice(baseId);
 
     return {
       props: {
-        froggie_price: price
+        konda_price: price
       },
     };
   } catch (error) {
@@ -36,13 +34,13 @@ export async function getStaticProps() {
 
     return {
       props: {
-        froggie_price: 0
+        konda_price: 0
       },
     };
   }
 }
 
-export default function Page({ froggie_price }) {
+export default function Page({ konda_price }) {
   const {
     future_events,
     current_events,
@@ -57,7 +55,7 @@ export default function Page({ froggie_price }) {
     verfied_buy_information,
     token_bio_information,
     token_profile_information
-  } = FroggieInformation(froggie_price);
+  } = KondaInformation(konda_price);
 
   const theme = createTheme({
     palette: {
@@ -71,7 +69,7 @@ export default function Page({ froggie_price }) {
   <>
     <Head>
       <title>
-        $FROGGIE | TurtleDAO
+        $KONDA | TurtleDAO
       </title>
     </Head>
 
@@ -98,7 +96,7 @@ export default function Page({ froggie_price }) {
           </Grid>
 
           <Grid xs={12} sm={6} lg={3} >
-            <AdaCompareCard sx={{ height: '100%', marginRight: '10px' }} tokenPrice={froggie_price} ticker={ticker} />
+            <AdaCompareCard sx={{ height: '100%', marginRight: '10px' }} tokenPrice={konda_price} ticker={ticker} />
           </Grid>
           
         </Grid>
@@ -126,8 +124,8 @@ export default function Page({ froggie_price }) {
               lg={8}
             >
               <Pie
-                chartSeries={[38.18, 10.89, 20.72, 10.89, 19.32]}
-                labels={['LP', 'Airdrops', 'OTC', 'Distribution', 'Development']}
+                chartSeries={[55, 15, 17, 7.5, 3, 2.5]}
+                labels={['LP', 'Utility', 'Airdrops', 'Pre-Sale', 'Reserved', 'Burned']}
                 sx={{ height: '100%', marginRight: '10px' }}
               />
             </Grid>
@@ -148,28 +146,28 @@ export default function Page({ froggie_price }) {
               lg={4}
               
             >
-            <ThemeProvider theme={theme}>
-            <Card sx={{
-              backgroundColor: '#2d2d2d',
-              border: "2px solid #4CAF50"
-            }}>
-              <CardContent>
-              <TwitterTimelineEmbed
-                sourceType="profile"
-                screenName="Froggieo_"
-                theme='dark'
-                options={{
-                  height: 600,
-                }}
-              />
-              </CardContent>
+              <Card sx={{
+                backgroundColor: '#2d2d2d',
+                border: "2px solid #4CAF50"
+              }}>
+                <CardContent>
+                  <TwitterTimelineEmbed
+                    sourceType="profile"
+                    screenName="AdaKondaCoin"
+                    theme='dark'
+                    options={{
+                      height: 500,
+                    }}
+                  />
+                </CardContent>
               </Card>
-              </ThemeProvider>
+
               <Divider/>
               <Divider/>
               <Divider/>
               <Divider/>
-              <FroggieNFTs sx={{ height: '100%', marginRight: '10px' }} />
+              
+              <BuyVerified sx={{ minWidth: "100%" }} verfied_buy_information={verfied_buy_information} />
             </Grid>
 
             <Grid
@@ -178,12 +176,6 @@ export default function Page({ froggie_price }) {
               lg={4}
             >
               <Bio sx={{ minWidth: "100%" }} token_bio_information={token_bio_information} />
-              <Divider/>
-              <Divider/>
-              <Divider/>
-              <Divider/>
-              
-              <BuyVerified sx={{ minWidth: "100%" }} verfied_buy_information={verfied_buy_information} />
             </Grid>
             <Grid
               xs={12}
