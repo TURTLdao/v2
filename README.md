@@ -12,3 +12,4 @@
 - $TURTL - Turtle Token
 - $FROGGIE - Froggie Koin
 - $KONDA - AdaKonda Coin
+- $CATSKY - Catsky Coin
