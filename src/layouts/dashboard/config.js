@@ -9,6 +9,15 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export const items = [
   {
+    title: 'Dashboard',
+    path: '/dashboard',
+    icon: (
+      <SvgIcon fontSize="small">
+        <DashboardIcon />
+      </SvgIcon>
+    )
+  },
+  {
     title: 'AAID',
     path: '/launchpad',
     icon: (
@@ -20,16 +29,6 @@ export const items = [
 ];
 
 export const items2 = [
-  {
-    title: 'Dashboard',
-    path: '/',
-    disabled: true,
-    icon: (
-      <SvgIcon fontSize="small">
-        <DashboardIcon />
-      </SvgIcon>
-    )
-  },
   {
     title: 'Watchlist',
     path: '/',

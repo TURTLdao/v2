@@ -127,9 +127,9 @@ export default function CustomizedTimeline() {
 
         <TimelineContent sx={{ py: '12px', px: 2 }}>
           <Typography variant="h6" component="span" sx={{ color: 'primary.main'}}>
-            $FROGGIE and $KONDA
+            $FROGGIE, $KONDA & $CATSKY
           </Typography>
-          <Typography variant="body2"  sx={{ color: 'white'}}>TurtleDAO has fully implented Froggie Koin and AdaKonda Coin into its AAID dashboard.</Typography>
+          <Typography variant="body2"  sx={{ color: 'white'}}>TurtleDAO has fully implented Froggie Koin, AdaKonda Coin and Catsky Coin into its AAID dashboard.</Typography>
         </TimelineContent>
       </TimelineItem>
 

@@ -40,6 +40,15 @@ function KondaInformation(konda_price) {
       buy_link: 'https://app.minswap.org/swap?currencySymbolA=&tokenNameA=&currencySymbolB=501dd5d2fbab6af0a26b1421076ff3afc4d5a34d6b3f9694571116ea&tokenNameB=4b4f4e4441',
       ticker: ticker,
     };
+
+    // Market Table Information
+    const market_table_information = {
+      coin_name: coin_name,
+      coin_price: formatted_price,
+      coin_mc: formatted_marketcap,
+      ticker: ticker,
+      coin_logo: '/token-images/konda.png'
+    } 
   
     const token_bio_information = {
       coin_name: coin_name,
@@ -78,6 +87,7 @@ function KondaInformation(konda_price) {
       formatted_supply,
       marketcap_title,
       price_title,
+      market_table_information,
       verfied_buy_information,
       token_bio_information,
       token_profile_information

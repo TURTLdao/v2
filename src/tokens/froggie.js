@@ -42,6 +42,15 @@ function FroggieInformation(froggie_price) {
     ticker: ticker,
   };
 
+  // Market Table Information
+  const market_table_information = {
+    coin_name: coin_name,
+    coin_price: formatted_price,
+    coin_mc: formatted_marketcap,
+    ticker: ticker,
+    coin_logo: '/token-images/froggie.png'
+  } 
+  
   const token_bio_information = {
     coin_name: coin_name,
     coin_motto: 'Froggie is here for everyone. Froggie is the new wave. Join us in the pond.',
@@ -79,6 +88,7 @@ function FroggieInformation(froggie_price) {
     formatted_supply,
     marketcap_title,
     price_title,
+    market_table_information,
     verfied_buy_information,
     token_bio_information,
     token_profile_information

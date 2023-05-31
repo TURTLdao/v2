@@ -36,6 +36,15 @@ function TurtleInformation(turtle_price) {
       event_1: ' N/A ',
     };
 
+    // Market Table Information
+    const market_table_information = {
+      coin_name: coin_name,
+      coin_price: formatted_price,
+      coin_mc: formatted_marketcap,
+      ticker: ticker,
+      coin_logo: '/token-images/turtl.png'
+    } 
+
     const token_profile_information = {
       avatar: token_logo,
       name: coin_name,
@@ -63,6 +72,7 @@ function TurtleInformation(turtle_price) {
       formatted_supply,
       marketcap_title,
       price_title,
+      market_table_information,
       token_profile_information
     };
   

@@ -45,6 +45,7 @@ export async function getStaticProps() {
 
     return {
       props: {
+        f_turtle_price,
         f_froggie_price,
         f_konda_price,
         f_catsky_price,
@@ -107,7 +108,7 @@ export default function Page({ f_turtle_price, f_froggie_price, f_konda_price, f
       logo: '/token-images/konda.png'
     },
     {
-      title: 'Catsky Coin',
+      title: 'Catsky Token',
       ticker: '$CATSKY',
       category: 'Meme',
       description: 'Believers in Cardano',

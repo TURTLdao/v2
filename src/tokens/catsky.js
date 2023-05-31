@@ -20,7 +20,7 @@ function CatskyInformation(catsky_price) {
     // Dashboard Information
     const marketcap_title = ticker + ' Marketcap';
     const price_title = ticker + ' Price';
-  
+
     // Token Events
     const future_events = {
       event_1: ' N/A ',
@@ -37,10 +37,19 @@ function CatskyInformation(catsky_price) {
     };
 
     const verfied_buy_information = {
-        buy_link: 'https://app.minswap.org/swap?currencySymbolA=&tokenNameA=&currencySymbolB=9b426921a21f54600711da0be1a12b026703a9bd8eb9848d08c9d921&tokenNameB=434154534b59',
-        ticker: ticker,
-      };
-    
+      buy_link: 'https://app.minswap.org/swap?currencySymbolA=&tokenNameA=&currencySymbolB=9b426921a21f54600711da0be1a12b026703a9bd8eb9848d08c9d921&tokenNameB=434154534b59',
+      ticker: ticker,
+    };
+
+    // Market Table Information
+    const market_table_information = {
+      coin_name: coin_name,
+      coin_price: formatted_price,
+      coin_mc: formatted_marketcap,
+      ticker: ticker,
+      coin_logo: '/token-images/catsky.png'
+    } 
+
     const token_bio_information = {
       coin_name: coin_name,
       coin_motto: 'Believers in Cardano',
@@ -78,6 +87,7 @@ function CatskyInformation(catsky_price) {
       formatted_supply,
       marketcap_title,
       price_title,
+      market_table_information,
       verfied_buy_information,
       token_bio_information,
       token_profile_information
