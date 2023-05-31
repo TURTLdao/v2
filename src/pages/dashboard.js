@@ -39,6 +39,19 @@ export async function getStaticProps() {
     const response = await fetch('https://api-mainnet-prod.minswap.org/coinmarketcap/v2/pairs');
     const data = await response.json();
 
+    const defaultPrices = {
+      [pairIds.froggie]: 0,
+      [pairIds.konda]: 0,
+      [pairIds.catsky]: 0,
+      [pairIds.agix]: 0,
+      [pairIds.snek]: 0,
+      [pairIds.wmt]: 0,
+      [pairIds.meld]: 0,
+      [pairIds.min]: 0,
+      [pairIds.aada]: 0,
+      [pairIds.ntx]: 0,
+    };
+
     const prices = pairIds.reduce((acc, pairId) => {
       const pair = data[pairId];
       const price = pair && pair.last_price ? pair.last_price : defaultPrices[pairId];
@@ -46,62 +59,52 @@ export async function getStaticProps() {
       return acc;
     }, {});
 
-    const f_turtle_price = Number(0).toFixed(10);
-
-    const f_froggie_price = Number(prices[pairIds['froggie']]).toFixed(10);
-    const f_konda_price = Number(prices[pairIds['konda']]).toFixed(10);
-    const f_catsky_price = Number(prices[pairIds['catsky']]).toFixed(10);
-
-    const f_agix_price = Number(prices[pairIds['catsky']]).toFixed(10);
-    const f_snek_price = Number(prices[pairIds['catsky']]).toFixed(10);
-    const f_wmt_price  = Number(prices[pairIds['catsky']]).toFixed(10);
-    const f_meld_price = Number(prices[pairIds['catsky']]).toFixed(10);
-    const f_min_price  = Number(prices[pairIds['catsky']]).toFixed(10);
-    const f_aada_price = Number(prices[pairIds['catsky']]).toFixed(10);
-    const f_ntx_price  = Number(prices[pairIds['catsky']]).toFixed(10);
+    const f_prices = {
+      f_turtle_price: Number(0).toFixed(10),
+      f_froggie_price: Number(prices[pairIds.froggie]).toFixed(10),
+      f_konda_price: Number(prices[pairIds.konda]).toFixed(10),
+      f_catsky_price: Number(prices[pairIds.catsky]).toFixed(10),
+      f_agix_price: Number(prices[pairIds.agix]).toFixed(10),
+      f_snek_price: Number(prices[pairIds.snek]).toFixed(10),
+      f_wmt_price: Number(prices[pairIds.wmt]).toFixed(10),
+      f_meld_price: Number(prices[pairIds.meld]).toFixed(10),
+      f_min_price: Number(prices[pairIds.min]).toFixed(10),
+      f_aada_price: Number(prices[pairIds.aada]).toFixed(10),
+      f_ntx_price: Number(prices[pairIds.ntx]).toFixed(10),
+    };
 
     return {
       props: {
-        f_turtle_price,
-        f_froggie_price,
-        f_konda_price,
-        f_catsky_price,
-
-        f_agix_price,
-        f_snek_price,
-        f_wmt_price,
-        f_meld_price,
-        f_min_price,
-        f_aada_price,
-        f_ntx_price,
+        ...f_prices,
       },
     };
 
   } catch (error) {
     console.error('Error:', error);
 
+    const defaultPrices = {
+      f_turtle_price: 0,
+      f_froggie_price: 0,
+      f_konda_price: 0,
+      f_catsky_price: 0,
+      f_agix_price: 0,
+      f_snek_price: 0,
+      f_wmt_price: 0,
+      f_meld_price: 0,
+      f_min_price: 0,
+      f_aada_price: 0,
+      f_ntx_price: 0,
+    };
+
     return {
       props: {
-        f_turtle_price: 0,
-        f_froggie_price: 0,
-        f_konda_price: 0,
-        f_catsky_price: 0,
-
-        f_agix_price: 0,
-        f_snek_price: 0,
-        f_wmt_price: 0,
-        f_meld_price: 0,
-        f_min_price: 0,
-        f_aada_price: 0,
-        f_ntx_price: 0,
+        ...defaultPrices,
       },
     };
   }
 }
 
-export default function Page({
-  f_turtle_price, f_froggie_price, f_konda_price, f_catsky_price, f_agix_price,
-  f_snek_price, f_wmt_price, f_meld_price, f_min_price, f_aada_price, f_ntx_price }) {
+export default function Page({ ...f_prices }) {
  
   const calculate_tokens_to_ada = (tokenPrice) => {
     if (tokenPrice <= 0) {
@@ -111,66 +114,60 @@ export default function Page({
     return Math.ceil(1 / tokenPrice);
   };
 
-  const turtle_raw_supply = 300000000;
-  const froggie_raw_supply = 69000000000;
-  const konda_raw_supply = 84322711100;
-  const catsky_raw_supply = 1000000000000;
+  const rawSupplies = {
+    turtle: 300000000,
+    froggie: 69000000000,
+    konda: 84322711100,
+    catsky: 1000000000000,
+  };
 
-  const turtle_market = {
-    price: f_turtle_price,
-    marketcap: f_turtle_price * turtle_raw_supply,
-    to_ada: calculate_tokens_to_ada(f_turtle_price)
-  }
-  const froggie_market = {
-    price: f_froggie_price,
-    marketcap: f_froggie_price * froggie_raw_supply,
-    to_ada: calculate_tokens_to_ada(f_froggie_price)
-  }
-  const konda_market = {
-    price: f_konda_price,
-    marketcap: f_konda_price * konda_raw_supply,
-    to_ada: calculate_tokens_to_ada(f_konda_price)
-  }
-  const catsky_market = {
-    price: f_catsky_price,
-    marketcap: f_catsky_price * catsky_raw_supply,
-    to_ada: calculate_tokens_to_ada(f_catsky_price)
-  }
+  const calculateMarketValues = (price, rawSupply) => {
+    return {
+      price,
+      marketcap: price * rawSupply,
+      to_ada: calculate_tokens_to_ada(price),
+    };
+  };
+
+  const turtle_market = calculateMarketValues(f_prices.f_turtle_price, rawSupplies.turtle);
+  const froggie_market = calculateMarketValues(f_prices.f_froggie_price, rawSupplies.froggie);
+  const konda_market = calculateMarketValues(f_prices.f_konda_price, rawSupplies.konda);
+  const catsky_market = calculateMarketValues(f_prices.f_catsky_price, rawSupplies.catsky);
 
   const agix_market = {
-    price: f_agix_price,
-    marketcap: f_agix_price * catsky_raw_supply,
-    to_ada: calculate_tokens_to_ada(f_agix_price)
+    price: f_prices.f_agix_price,
+    marketcap: f_prices.f_agix_price * rawSupplies.catsky,
+    to_ada: calculate_tokens_to_ada(f_prices.f_agix_price)
   }
   const snek_market = {
-    price: f_snek_price,
-    marketcap: f_snek_price * catsky_raw_supply,
-    to_ada: calculate_tokens_to_ada(f_snek_price)
+    price: f_prices.f_snek_price,
+    marketcap: f_prices.f_snek_price * rawSupplies.catsky,
+    to_ada: calculate_tokens_to_ada(f_prices.f_snek_price)
   }
   const wmt_market = {
-    price: f_wmt_price,
-    marketcap: f_wmt_price * catsky_raw_supply,
-    to_ada: calculate_tokens_to_ada(f_wmt_price)
+    price: f_prices.f_wmt_price,
+    marketcap: f_prices.f_wmt_price * rawSupplies.catsky,
+    to_ada: calculate_tokens_to_ada(f_prices.f_wmt_price)
   }
   const meld_market = {
-    price: f_meld_price,
-    marketcap: f_meld_price * catsky_raw_supply,
-    to_ada: calculate_tokens_to_ada(f_meld_price)
+    price: f_prices.f_meld_price,
+    marketcap: f_prices.f_meld_price * rawSupplies.catsky,
+    to_ada: calculate_tokens_to_ada(f_prices.f_meld_price)
   }
   const min_market = {
-    price: f_min_price,
-    marketcap: f_min_price * catsky_raw_supply,
-    to_ada: calculate_tokens_to_ada(f_min_price)
+    price: f_prices.f_min_price,
+    marketcap: f_prices.f_min_price * rawSupplies.catsky,
+    to_ada: calculate_tokens_to_ada(f_prices.f_min_price)
   }
   const aada_market = {
-    price: f_aada_price,
-    marketcap: f_aada_price * catsky_raw_supply,
-    to_ada: calculate_tokens_to_ada(f_aada_price)
+    price: f_prices.f_aada_price,
+    marketcap: f_prices.f_aada_price * rawSupplies.catsky,
+    to_ada: calculate_tokens_to_ada(f_prices.f_aada_price)
   }
   const ntx_market = {
-    price: f_ntx_price,
-    marketcap: f_ntx_price * catsky_raw_supply,
-    to_ada: calculate_tokens_to_ada(f_ntx_price)
+    price: f_prices.f_ntx_price,
+    marketcap: f_prices.f_ntx_price * rawSupplies.catsky,
+    to_ada: calculate_tokens_to_ada(f_prices.f_ntx_price)
   }
   
   const complete_markets = {
