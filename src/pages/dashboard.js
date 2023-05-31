@@ -52,10 +52,10 @@ export async function getStaticProps() {
       [pairIds.ntx]: 0,
     };
 
-    const prices = pairIds.reduce((acc, pairId) => {
+    const prices = Object.entries(pairIds).reduce((acc, [key, pairId]) => {
       const pair = data[pairId];
       const price = pair && pair.last_price ? pair.last_price : defaultPrices[pairId];
-      acc[pairId] = price;
+      acc[key] = price;
       return acc;
     }, {});
 
