@@ -103,39 +103,27 @@ export default function Page({ ...f_prices }) {
     return Math.ceil(1 / tokenPrice);
   };
 
-  const rawSupplies = {
-    turtle: 300000000,
-    froggie: 69000000000,
-    konda: 84322711100,
-    catsky: 1000000000000,
-    aigx: 167706494,
-    snek: 76715880000,
-    wmt: 2000000000,
-    meld: 4000000000,
-    min: 5000000000,
-    aada: 29500000,
-    ntx: 408477453,
-  };
-
   const calculateMarketValues = (price, rawSupply) => {
+
     return {
-      price,
+      price: parseFloat(price),
       marketcap: price * rawSupply,
-      to_ada: calculate_tokens_to_ada(price),
+      to_ada: calculate_tokens_to_ada(price.toLocaleString()),
     };
   };
 
-  const turtle_market = calculateMarketValues(f_prices.f_turtle_price, rawSupplies.turtle);
-  const froggie_market = calculateMarketValues(f_prices.f_froggie_price, rawSupplies.froggie);
-  const konda_market = calculateMarketValues(f_prices.f_konda_price, rawSupplies.konda);
-  const catsky_market = calculateMarketValues(f_prices.f_catsky_price, rawSupplies.catsky);
-  const agix_market = calculateMarketValues(f_prices.f_catsky_price, rawSupplies.agix);
-  const snek_market = calculateMarketValues(f_prices.f_catsky_price, rawSupplies.snek);
-  const wmt_market = calculateMarketValues(f_prices.f_catsky_price, rawSupplies.wmt);
-  const meld_market = calculateMarketValues(f_prices.f_catsky_price, rawSupplies.meld);
-  const min_market = calculateMarketValues(f_prices.f_catsky_price, rawSupplies.min);
-  const aada_market = calculateMarketValues(f_prices.f_catsky_price, rawSupplies.aada);
-  const ntx_market = calculateMarketValues(f_prices.f_catsky_price, rawSupplies.ntx);
+
+  const turtle_market = calculateMarketValues(f_prices.f_turtle_price, 300000000);
+  const froggie_market = calculateMarketValues(f_prices.f_froggie_price, 69000000000);
+  const konda_market = calculateMarketValues(f_prices.f_konda_price, 84322711100);
+  const catsky_market = calculateMarketValues(f_prices.f_catsky_price, 1000000000000);
+  const agix_market = calculateMarketValues(f_prices.f_agix_price, 167706494);
+  const snek_market = calculateMarketValues(f_prices.f_snek_price, 76715880000);
+  const wmt_market = calculateMarketValues(f_prices.f_wmt_price, 2000000000);
+  const meld_market = calculateMarketValues(f_prices.f_meld_price, 4000000000);
+  const min_market = calculateMarketValues(f_prices.f_min_price, 5000000000);
+  const aada_market = calculateMarketValues(f_prices.f_aada_price, 29500000);
+  const ntx_market = calculateMarketValues(f_prices.f_ntx_price, 408477453);
 
   const complete_markets = {
     turtle_market,
