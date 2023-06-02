@@ -25,15 +25,15 @@ function TurtleInformation(turtle_price) {
     const future_events = {
       event_1: 'Token Sale',
       event_1_link: 'https://twitter.com/_TurtleDAO/',
-      event_2: ' N/A '
+      event_2: ''
     };
     const current_events = {
-      event_1: ' N/A ',
+      event_1: '',
       event_1_link: '',
-      event_2: ' N/A '
+      event_2: ''
     };
     const past_events = {
-      event_1: ' N/A ',
+      event_1: '',
     };
 
     // Market Table Information

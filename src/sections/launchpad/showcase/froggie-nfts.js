@@ -35,7 +35,7 @@ import { Avatar, Box, Button, Card, CardActions, CardContent,
       return (
         <ThemeProvider theme={theme}>
         <Card sx={{
-          backgroundColor: '#2d2d2d',
+          background: 'radial-gradient(circle, rgba(42,97,44,1) 0%, rgba(45,45,45,1) 100%)',
           border: "2px solid #4CAF50"
         }}>
           <CardContent>

@@ -127,21 +127,7 @@ export default function Page() {
               lg={4}
               
             >
-              <Card sx={{
-                backgroundColor: '#2d2d2d',
-                border: "2px solid #4CAF50"
-              }}>
-                <CardContent>
-                  <TwitterTimelineEmbed
-                    sourceType="profile"
-                    screenName="_TurtleDAO"
-                    theme='dark'
-                    options={{
-                      height: 500,
-                    }}
-                  />
-                </CardContent>
-              </Card>
+            <TurtleBio sx={{ minWidth: "100%" }} />
             </Grid>
 
             <Grid
@@ -171,18 +157,26 @@ export default function Page() {
           >
             <Grid
               xs={12}
-              md={4}
-              lg={4}
+              md={8}
+              lg={8}
             >
-              <TurtleBio sx={{ minWidth: "100%" }} />
+            <Card sx={{
+              background: 'radial-gradient(circle, rgba(42,97,44,1) 0%, rgba(45,45,45,1) 100%)',
+              border: "2px solid #4CAF50"
+            }}>
+              <CardContent>
+                <TwitterTimelineEmbed
+                  sourceType="profile"
+                  screenName="_TurtleDAO"
+                  theme='dark'
+                  options={{
+                    height: 500,
+                  }}
+                />
+              </CardContent>
+            </Card>
             </Grid>
-            <Grid
-              xs={12}
-              md={4}
-              lg={4}
-            >
-              <TurtleDAOfunds sx={{ minWidth: "100%" }} />
-            </Grid>
+
           </Grid>
         </div>
       </Container>

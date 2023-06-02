@@ -25,12 +25,12 @@ function FroggieInformation(froggie_price) {
   const future_events = {
     event_1: '$FROGGIE NFTs',
     event_1_link: 'https://twitter.com/_TurtleDAO/status/1662053306477232129?s=20',
-    event_2: ' N/A '
+    event_2: ''
   };
   const current_events = {
-    event_1: ' N/A ',
+    event_1: '',
     event_1_link: '',
-    event_2: ' N/A '
+    event_2: ''
   };
   const past_events = {
     event_1: 'Croak Challenge',

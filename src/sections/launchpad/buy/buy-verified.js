@@ -2,25 +2,10 @@ import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader,
     IconButton, Divider, Stack, SvgIcon, Typography
   } from '@mui/material';
     
-  import GlobeAltIcon from '@heroicons/react/24/solid/GlobeAltIcon';
-  
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-  const token = 
-  {
-    avatar: '/token-images/froggie.png',
-    name: 'Froggie Koin',
-    city: '69,000,000,000',
-    timezone: '$FROGGIE',
-    jobTitle: 'Senior Developer',
-  };
-  
 export const BuyVerified = ({ verfied_buy_information }) => {
-    
-    const handleClick = () => {
-    
-    };
-    
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -32,7 +17,7 @@ export const BuyVerified = ({ verfied_buy_information }) => {
       return (
         <ThemeProvider theme={theme}>
       <Card sx={{
-        backgroundColor: '#2d2d2d',
+        background: 'radial-gradient(circle, rgba(42,97,44,1) 0%, rgba(45,45,45,1) 100%)',
         border: "2px solid #4CAF50"
       }}>
       <CardHeader
