@@ -28,8 +28,8 @@ export async function getStaticProps() {
   try {
     const price = await getLastPrice(baseId);
 
-    const get_history = await fetch('https://api.coingecko.com/api/v3/coins/' + coinName + '/tickers');
-    const get_history_data = JSON.parse(get_history);
+    const get_history = await fetch('https://analyticsv2.muesliswap.com/price?policy-id=79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a1&tokenname=FROGGIE&interval=hourly');
+    const get_history_data = await get_history.json();
     const medianArray = get_history_data.map(item => Number(item.median));
     
     
@@ -39,7 +39,7 @@ export async function getStaticProps() {
     return {
       props: {
         froggie_price: price,
-        historical_price_array: get_history_data
+        historical_price_array: medianArray
       },
     };
   } catch (error) {
