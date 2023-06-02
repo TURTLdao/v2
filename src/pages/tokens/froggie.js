@@ -16,6 +16,8 @@ import { Bio } from 'src/sections/launchpad/profile/bio';
 import { Profile } from 'src/sections/launchpad/profile/profile';
 import { BuyVerified } from 'src/sections/launchpad/buy/buy-verified';
 
+import { FroggiePriceChart } from 'src/sections/launchpad/charts/froggie-price';
+
 import { getLastPrice } from 'src/api/fetch-calls';
 
 import FroggieInformation from 'src/tokens/froggie';
@@ -26,9 +28,18 @@ export async function getStaticProps() {
   try {
     const price = await getLastPrice(baseId);
 
+    const get_history = await fetch('https://api.coingecko.com/api/v3/coins/' + coinName + '/tickers');
+    const get_history_data = JSON.parse(get_history);
+    const medianArray = get_history_data.map(item => Number(item.median));
+    
+    
+    // https://analyticsv2.muesliswap.com/price?policy-id=79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a1&tokenname=FROGGIE&interval=hourly
+  
+
     return {
       props: {
-        froggie_price: price
+        froggie_price: price,
+        historical_price_array: get_history_data
       },
     };
   } catch (error) {
@@ -36,13 +47,14 @@ export async function getStaticProps() {
 
     return {
       props: {
-        froggie_price: 0
+        froggie_price: 0,
+        historical_price_array: []
       },
     };
   }
 }
 
-export default function Page({ froggie_price }) {
+export default function Page({ froggie_price, historical_price_array }) {
   const {
     future_events,
     current_events,
@@ -58,6 +70,8 @@ export default function Page({ froggie_price }) {
     token_bio_information,
     token_profile_information
   } = FroggieInformation(froggie_price);
+
+  // https://analyticsv2.muesliswap.com/price?policy-id=79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a1&tokenname=FROGGIE&interval=hourly
 
   const theme = createTheme({
     palette: {
@@ -213,12 +227,7 @@ export default function Page({ froggie_price }) {
               mt: 2
             }}
           >
-            <Grid 
-              xs={12}
-              md={6}
-              lg={4}
-            >
-            </Grid>
+
 
           </Grid>
         </div>

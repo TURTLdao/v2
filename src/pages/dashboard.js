@@ -18,6 +18,10 @@ import FroggieInformation from 'src/tokens/froggie';
 import KondaInformation from 'src/tokens/konda';
 import CatskyInformation from 'src/tokens/catsky';
 
+import { useContext } from 'react';
+import { AppStateContext } from 'src/utils/apply-address';
+import { MainBanner } from 'src/sections/dashboard/banners/main';
+
 export async function getStaticProps() {
   const pairIds = [
     // DAO
@@ -121,6 +125,7 @@ export async function getStaticProps() {
 }
 
 export default function Page({ ...f_prices }) {
+  const { walletAddress } = useContext(AppStateContext);
  
   const calculate_tokens_to_ada = (tokenPrice) => {
     if (tokenPrice <= 0) {
@@ -225,6 +230,18 @@ export default function Page({ ...f_prices }) {
           container
           spacing={3}
         >
+        <div align='center' style={{ width: '100%' }}>
+          <Grid
+            xs={12}
+            sm={12}
+            lg={8}
+          >
+            <div align='center'>
+            <MainBanner
+              sx={{ width: '75%' }}
+            /></div>
+          </Grid></div>
+          
           <Grid
             xs={12}
             sm={12}

@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { SocialIcon } from 'react-social-icons';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { getDaoWatchlistItems, getPopularWatchlistItems, getAllWatchlistItems } from './watchlist-items';
+import { getDaoWatchlistItems, getExtWatchlistItems } from './watchlist-items';
 
 export const TurtleDaoWatchlist = ({ market_data }) => {
  
@@ -21,8 +21,12 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
   });
 
   const dao_watchlist_items = getDaoWatchlistItems(market_data);
-  const popular_watchlist_items = getPopularWatchlistItems(market_data);
-  const all_watchlist_items = getAllWatchlistItems(market_data);
+  const ext_watchlist_items = getExtWatchlistItems(market_data);
+
+  // All items: Dao + Ext
+  const combinedItems = dao_watchlist_items.concat(ext_watchlist_items);
+  // Top 20 by price from All items
+  const sortedByItemsPrice = [...combinedItems].sort((a, b) => b.price - a.price).slice(0, 20);
 
   const [activeTableTopButton, setActiveTableTopButton] = useState(1);
   const [tableItem, setTableItem] = useState(dao_watchlist_items);
@@ -30,35 +34,44 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
 
   const sortByPrice = () => {
     const sortedByPrice = [...tableItem].sort((a, b) => b.price - a.price);
-    setSortedItems(sortedByPrice);
+    // only slice for popular items
+    const topItems = (activeTableTopButton === 2) ? sortedByPrice.slice(0, 20) : sortedByPrice;
+    setSortedItems(topItems);
   };
 
   const sortByMarketCap = () => {
     const sortedByMarketCap = [...tableItem].sort((a, b) => b.marketcap - a.marketcap);
-    setSortedItems(sortedByMarketCap);
+    // only slice for popular items
+    const topItems = (activeTableTopButton === 2) ? sortedByMarketCap.slice(0, 20) : sortedByMarketCap;
+    setSortedItems(topItems);
   };
 
+  // Used for Dao items only
   const sortById = () => {
     const sortedById = [...tableItem].sort((a, b) => a.id - b.id);
     setSortedItems(sortedById);
   };
 
+  const openNewTab = (link) => {
+    window.open(link);
+  };
+
   const handleTopButtonButtonClick = (btn_name) => {
     switch (btn_name) {
       case 'dao':
-        setTableItem(dao_watchlist_items);
         setActiveTableTopButton(1);
+        setTableItem(dao_watchlist_items);
         setSortedItems(dao_watchlist_items);
         break;
       case 'popular':
-        setTableItem(popular_watchlist_items);
         setActiveTableTopButton(2);
-        setSortedItems(popular_watchlist_items);
+        setTableItem(sortedByItemsPrice);
+        setSortedItems(sortedByItemsPrice);
         break;
       case 'all':
-        setTableItem(all_watchlist_items);
         setActiveTableTopButton(3);
-        setSortedItems(all_watchlist_items);
+        setTableItem(combinedItems);
+        setSortedItems(combinedItems);
         break;
       default:
         setTableItem(dao_watchlist_items);
@@ -148,7 +161,8 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
               Sort By: Marketcap
             </Button>
 
-          <Table >
+          <Table 
+          >
             <TableHead>
               <TableRow>
                 <TableCell sx={{ color: 'primary.main'}}>
@@ -220,14 +234,13 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
                         <Button
                           variant={"contained"}
                           size="small"
-                          onClick={() => handleTopButtonButtonClick('main')}
+                          onClick={() => openNewTab(item.dao_support_link)}
                           sx={{ marginRight: "10px", color: 'white' }}
                         >
                           Go
                         </Button> : <Button
                           variant={"contained"}
                           size="small"
-                          onClick={() => handleTopButtonButtonClick('main')}
                           sx={{ marginRight: "10px" }}
                           disabled={true}
                         >
@@ -257,18 +270,17 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
                     <TableCell>
                       <center>
                       {
-                      item.dao_support_link ?
+                      item.buy_link ?
                         <Button
                           variant={"contained"}
                           size="small"
-                          onClick={() => handleTopButtonButtonClick('main')}
+                          onClick={() => openNewTab(item.buy_link)}
                           sx={{ marginRight: "10px", color: 'white' }}
                         >
                           Buy Now
                         </Button> : <Button
                           variant={"contained"}
                           size="small"
-                          onClick={() => handleTopButtonButtonClick('main')}
                           sx={{ marginRight: "10px" }}
                           disabled={true}
                         >

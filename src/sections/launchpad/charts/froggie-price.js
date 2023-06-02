@@ -48,7 +48,7 @@ const useChartOptions = (labels) => {
       },
     },
     xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      categories: ['1 Day Ago', '2 Days Ago', '3 Days Ago', '4 Days Ago', '5 Days Ago', '6 Days Ago', '1 Week Ago'],
     }
   };
 };
@@ -103,7 +103,7 @@ export const FroggiePriceChart = (props) => {
         <Chart
           height={300}
           options={chartOptions}
-          series={series}
+          series={chartSeries}
           type="line"
           width="100%"
         />

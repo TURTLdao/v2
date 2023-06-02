@@ -23,42 +23,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 export default function Page() {
   const router = useRouter();
   const auth = useAuth();
-  const [method, setMethod] = useState('email');
-  const formik = useFormik({
-    initialValues: {
-      email: 'demo@devias.io',
-      password: 'Password123!',
-      submit: null
-    },
-    validationSchema: Yup.object({
-      email: Yup
-        .string()
-        .email('Must be a valid email')
-        .max(255)
-        .required('Email is required'),
-      password: Yup
-        .string()
-        .max(255)
-        .required('Password is required')
-    }),
-    onSubmit: async (values, helpers) => {
-      try {
-        await auth.signIn(values.email, values.password);
-        router.push('/');
-      } catch (err) {
-        helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: err.message });
-        helpers.setSubmitting(false);
-      }
-    }
-  });
-
-  const handleMethodChange = useCallback(
-    (event, value) => {
-      setMethod(value);
-    },
-    []
-  );
 
   const handleSkip = useCallback(
     () => {
@@ -124,26 +88,27 @@ export default function Page() {
                   &nbsp;- The most trusted Cardano web wallet
               </Typography>
             </Stack>
-                <Button
-                  fullWidth
-                  size="large"
-                  sx={{ mt: 3 }}
-                  type="submit"
-                  variant="contained"
-                  disabled='true'
-                  style={{ backgroundColor: "#4CAF50", color: 'white' }}
-                >
-                  Connect Wallet
-                </Button>
-                <Button
-                  fullWidth
-                  size="large"
-                  sx={{ mt: 3 }}
-                  onClick={handleSkip}
-                  style={{ color: '#d1d1d1' }}
-                >
-                  Skip connecting wallet
-                </Button>
+
+              <Button
+                fullWidth
+                size="large"
+                sx={{ mt: 3 }}
+                type="submit"
+                variant="contained"
+                style={{ backgroundColor: "#4CAF50", color: 'white' }}
+                disabled='true'
+              >
+                Connect Wallet
+              </Button>
+              <Button
+                fullWidth
+                size="large"
+                sx={{ mt: 3 }}
+                onClick={handleSkip}
+                style={{ color: '#d1d1d1' }}
+              >
+                Skip connecting wallet
+              </Button>    
           </div>
         </Box>
       </Box>
