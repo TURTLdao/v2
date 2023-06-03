@@ -7,6 +7,13 @@ import { TurtleDaoWatchlist } from 'src/sections/dashboard/dao-watchlist';
 
 import { MainBanner } from 'src/sections/dashboard/banners/main';
 
+export async function getStaticPaths() {
+  return {
+    paths: [], // No static paths, indicating this page doesn't need static generation
+    fallback: 'blocking', // Set fallback to 'blocking' for server-side rendering (SSR)
+  };
+}
+
 export async function getStaticProps() {
   const pairIds = [
     // DAO
