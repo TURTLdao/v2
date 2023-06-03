@@ -3,11 +3,13 @@ import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
 import { Box, Divider, MenuItem, MenuList, Popover, Typography } from '@mui/material';
 import { useAuth } from 'src/hooks/use-auth';
+import useGlobalState, { walletAddress } from 'src/utils/global-const';
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open } = props;
   const router = useRouter();
   const auth = useAuth();
+  const [ userWalletAddress ] = useGlobalState(walletAddress);
 
   const handleSignOut = useCallback(
     () => {
@@ -27,7 +29,7 @@ export const AccountPopover = (props) => {
       }}
       onClose={onClose}
       open={open}
-      PaperProps={{ sx: { width: 200 } }}
+      PaperProps={{ sx: { width: 400, background: 'radial-gradient(circle, rgba(42,97,44,1) 0%, rgba(45,45,45,1) 100%)', border: "2px solid #4CAF50" } }}
     >
       <Box
         sx={{
@@ -35,15 +37,24 @@ export const AccountPopover = (props) => {
           px: 2
         }}
       >
-        <Typography variant="overline">
-          Account
-        </Typography>
-        <Typography
-          color="text.secondary"
-          variant="body2"
-        >
-          Anika Visser
-        </Typography>
+        {
+        userWalletAddress && Object.keys(userWalletAddress).length > 0 ? 
+          <Typography variant="overline" sx={{ color: '#4CAF50' }}>
+            Connected Account
+          </Typography> : null
+        }
+
+        {
+        userWalletAddress && Object.keys(userWalletAddress).length > 0 ? 
+          <Typography
+            color="text.secondary"
+            variant="body2"
+            sx={{ color: 'white' }}
+          >
+            {userWalletAddress}
+          </Typography> : null
+        }
+
       </Box>
       <Divider />
       <MenuList
@@ -56,7 +67,8 @@ export const AccountPopover = (props) => {
           }
         }}
       >
-        <MenuItem onClick={handleSignOut}>
+        <MenuItem onClick={handleSignOut} 
+          sx={{ color: 'white' }}>
           Sign out
         </MenuItem>
       </MenuList>

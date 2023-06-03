@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { Box, Button, Card, CardActions, CardHeader, Divider, SvgIcon,
-  Table, TableBody, TableCell, TableHead, TableRow, Typography
+  IconButton, Table, TableBody, TableCell, TableHead, TableRow, Typography
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import { useState, useEffect } from 'react';
-
+import Tooltip from '@mui/material/Tooltip';
 import { SocialIcon } from 'react-social-icons';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -25,24 +25,35 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
 
   // All items: Dao + Ext
   const combinedItems = dao_watchlist_items.concat(ext_watchlist_items);
-  // Top 20 by price from All items
-  const sortedByItemsPrice = [...combinedItems].sort((a, b) => b.price - a.price).slice(0, 20);
+  const sortedByItemsPrice = [...combinedItems].sort((a, b) => b.price - a.price);
 
   const [activeTableTopButton, setActiveTableTopButton] = useState(1);
   const [tableItem, setTableItem] = useState(dao_watchlist_items);
   const [sortedItems, setSortedItems] = useState(tableItem);
 
+  const dao_active_item = activeTableTopButton === 1;
+  const trending_active_item = activeTableTopButton === 2;
+  const popular_active_item = activeTableTopButton === 3;
+  const all_active_item = activeTableTopButton === 4;
+
   const sortByPrice = () => {
     const sortedByPrice = [...tableItem].sort((a, b) => b.price - a.price);
     // only slice for popular items
-    const topItems = (activeTableTopButton === 2) ? sortedByPrice.slice(0, 20) : sortedByPrice;
+    const topItems = (popular_active_item) ? sortedByPrice.slice(0, 20) : sortedByPrice;
     setSortedItems(topItems);
   };
 
   const sortByMarketCap = () => {
     const sortedByMarketCap = [...tableItem].sort((a, b) => b.marketcap - a.marketcap);
     // only slice for popular items
-    const topItems = (activeTableTopButton === 2) ? sortedByMarketCap.slice(0, 20) : sortedByMarketCap;
+    const topItems = (popular_active_item) ? sortedByMarketCap.slice(0, 20) : sortedByMarketCap;
+    setSortedItems(topItems);
+  };
+
+  const sortByVolume = () => {
+    const sortedByVolume = [...tableItem].sort((a, b) => b.volume - a.volume);
+    // only slice for popular items
+    const topItems = (popular_active_item) ? sortedByVolume.slice(0, 20) : sortedByVolume;
     setSortedItems(topItems);
   };
 
@@ -64,14 +75,14 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
         setSortedItems(dao_watchlist_items);
         break;
       case 'popular':
-        setActiveTableTopButton(2);
-        setTableItem(sortedByItemsPrice);
-        setSortedItems(sortedByItemsPrice);
+        setActiveTableTopButton(3);
+        setTableItem(sortedByItemsPrice.slice(0, 20));
+        setSortedItems(sortedByItemsPrice.slice(0, 20));
         break;
       case 'all':
-        setActiveTableTopButton(3);
-        setTableItem(combinedItems);
-        setSortedItems(combinedItems);
+        setActiveTableTopButton(4);
+        setTableItem(sortedByItemsPrice);
+        setSortedItems(sortedByItemsPrice);
         break;
       default:
         setTableItem(dao_watchlist_items);
@@ -83,58 +94,71 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
 
   return (
     <ThemeProvider theme={theme}>
-    <Card sx={{
-      background: 'radial-gradient(circle, rgba(42,97,44,1) 0%, rgba(45,45,45,1) 100%)',
-      border: "2px solid #4CAF50"
-    }}>
+      <Card sx={{
+        background: 'radial-gradient(circle, rgba(42,97,44,1) 0%, rgba(45,45,45,1) 100%)',
+        border: "2px solid #4CAF50"
+      }}>
+
       <CardHeader
         action={(
           <div>
-            <Button
-              variant={activeTableTopButton === 1 ? "contained" : "text"}
-              size="small"
-              onClick={() => handleTopButtonButtonClick('main')}
-              sx={{ marginRight: "10px", color: 'white' }}
-            >
-              Main
-            </Button>
-            <Button
-              variant={activeTableTopButton === 2 ? "contained" : "text"}
-              size="small"
-              onClick={() => handleTopButtonButtonClick('popular')}
-              sx={{ marginRight: "10px", color: 'white' }}
-            >
-              Popular
-            </Button>
-            <Button
-              variant={activeTableTopButton === 3 ? "contained" : "text"}
-              size="small"
-              onClick={() => handleTopButtonButtonClick('all')}
-              sx={{ marginRight: "10px", color: 'white' }}
-            >
-              All
-            </Button>
+
+            <Tooltip title="List TurtleDAO supported tokens.">
+              <Button
+                variant={dao_active_item ? "contained" : "text"}
+                size="small"
+                onClick={() => handleTopButtonButtonClick('dao')}
+                sx={{ marginRight: "10px", color: 'white' }}
+              >
+                DAO Supported
+              </Button>
+            </Tooltip>
+
+            <Tooltip title="List the top 20 tokens by Price.">
+              <Button
+                variant={popular_active_item ? "contained" : "text"}
+                size="small"
+                onClick={() => handleTopButtonButtonClick('popular')}
+                sx={{ marginRight: "10px", color: 'white' }}
+              >
+                Highest Value
+              </Button>
+            </Tooltip>
+
+            <Tooltip title="List all tokens integrated with TurtleDAO.">
+              <Button
+                variant={all_active_item ? "contained" : "text"}
+                size="small"
+                onClick={() => handleTopButtonButtonClick('all')}
+                sx={{ marginRight: "10px", color: 'white' }}
+              >
+                All
+              </Button>
+            </Tooltip>
+
           </div>
         )}
         sx={{ color: 'primary.main'}}
         title="TurtleDAO's Watchlist"
       />
 
-      <Scrollbar 
-    sx={{
-      height: 400,
-      width: "auto",
-      '& .simplebar-content': {
-        height: '100%',
-        width: "auto"
-      },
-      '& .simplebar-scrollbar:before': {
-        background: 'neutral.400'
-      }
-    }}>
-        <Box  >
+      <Scrollbar
+        sx={{
+          height: 400,
+          width: "auto",
+          '& .simplebar-content': {
+            height: '100%',
+            width: "auto"
+          },
+          '& .simplebar-scrollbar:before': {
+          background: 'neutral.400'
+        }
+      }}>
+
+        <Box>
+
           { // Only show sort by ID when DAO watchlist is active
-          activeTableTopButton === 1 ? 
+          dao_active_item ? 
             <Button
               variant={"text"}
               size="small"
@@ -144,6 +168,7 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
               Sort By: ID
             </Button> : null
           }
+
             <Button
               variant={"text"}
               size="small"
@@ -152,6 +177,7 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
             >
               Sort By: Price
             </Button>
+
             <Button
               variant={"text"}
               size="small"
@@ -161,8 +187,17 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
               Sort By: Marketcap
             </Button>
 
-          <Table 
-          >
+            <Button
+              variant={"text"}
+              size="small"
+              sx={{ marginLeft: "20px", marginBottom: "10px", color: 'white' }}
+              onClick={sortByVolume}
+            >
+              Sort By: Volume
+            </Button>
+
+          <div style={{ maxWidth: '100%', overflowX: 'auto' }}>
+          <Table >
             <TableHead>
               <TableRow>
                 <TableCell sx={{ color: 'primary.main'}}>
@@ -171,28 +206,35 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
                 <TableCell sx={{ color: 'primary.main'}}>
                   <b><center>Logo</center></b>
                 </TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main'}}>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main', maxWidth: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
                   <b><center>Ticker</center></b>
                 </TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main'}}>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main', maxWidth: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
                   <b><center>Name</center></b>
                 </TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main'}}>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main', maxWidth: '130px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
                   <b><center>Price</center></b>
                 </TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main'}}>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main', maxWidth: '120px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
                   <b><center>Marketcap</center></b>
                 </TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main'}}>
-                  <b><center>ADA Compare</center></b>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main', maxWidth: '120px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
+                  <b><center>Volume</center></b>
                 </TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main'}}>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main', maxWidth: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
+                  <div align='center'>
+                  <Tooltip title="Some tokens may not have decimals.">
+                    <b><center>ADA Compare</center></b>
+                  </Tooltip>
+                  </div>
+                </TableCell>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main' }}>
                   <b><center>TurtleDAO Support</center></b>
                 </TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main'}}>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main', maxWidth: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
                   <b><center>Social</center></b>
                 </TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main'}}>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main', maxWidth: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
                   <b><center>Dex</center></b>
                 </TableCell>
               </TableRow>
@@ -225,6 +267,9 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
                       <center>₳ {item.marketcap.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</center>
                     </TableCell>
                     <TableCell style={{ color: 'white' }}>
+                      <center>₳ {item.volume}</center>
+                    </TableCell>
+                    <TableCell style={{ color: 'white' }}>
                       <center>{item.to_ada.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })} {item.ticker}</center>
                     </TableCell>
                     <TableCell>
@@ -250,22 +295,24 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
                       </center>
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell sx={{  }}>
 
+                      <center>
                       {
                       item.discord_link ?
                         <SocialIcon url={item.discord_link} style={{ height: 25, width: 25, marginRight: 4, marginLeft: 4 }} network="discord"/>
-                      :
+                        :
                         null
                       }
 
                       {
                       item.twitter_link ?
                         <SocialIcon url={item.twitter_link} style={{ height: 25, width: 25 }} network="twitter"/>
-                      :
+                        :
                         null
                       }
 
+                      </center>
                     </TableCell>
                     <TableCell>
                       <center>
@@ -278,7 +325,9 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
                           sx={{ marginRight: "10px", color: 'white' }}
                         >
                           Buy Now
-                        </Button> : <Button
+                        </Button>
+                        :
+                        <Button
                           variant={"contained"}
                           size="small"
                           sx={{ marginRight: "10px" }}
@@ -294,6 +343,7 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
               })}
             </TableBody>
           </Table>
+          </div>
         </Box>
       </Scrollbar>
     </Card></ThemeProvider>
