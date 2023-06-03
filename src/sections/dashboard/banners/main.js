@@ -34,7 +34,7 @@ export const MainBanner = ({  }) => {
               variant="caption"
               sx={{ marginBottom: 1 }}
             >
-              v1.2
+              v1.3
             </Typography>
 
             <Typography
