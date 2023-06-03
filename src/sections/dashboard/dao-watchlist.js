@@ -4,7 +4,7 @@ import { Box, Button, Card, CardActions, CardHeader, Divider, SvgIcon,
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import { useState, useEffect } from 'react';
-
+import Tooltip from '@mui/material/Tooltip';
 import { SocialIcon } from 'react-social-icons';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -43,6 +43,13 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
     const sortedByMarketCap = [...tableItem].sort((a, b) => b.marketcap - a.marketcap);
     // only slice for popular items
     const topItems = (activeTableTopButton === 2) ? sortedByMarketCap.slice(0, 20) : sortedByMarketCap;
+    setSortedItems(topItems);
+  };
+
+  const sortByVolume = () => {
+    const sortedByVolume = [...tableItem].sort((a, b) => b.volume - a.volume);
+    // only slice for popular items
+    const topItems = (activeTableTopButton === 2) ? sortedByVolume.slice(0, 20) : sortedByVolume;
     setSortedItems(topItems);
   };
 
@@ -90,22 +97,29 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
       <CardHeader
         action={(
           <div>
+          <Tooltip title="List TurtleDAO supported tokens.">
             <Button
               variant={activeTableTopButton === 1 ? "contained" : "text"}
               size="small"
-              onClick={() => handleTopButtonButtonClick('main')}
+              onClick={() => handleTopButtonButtonClick('dao')}
               sx={{ marginRight: "10px", color: 'white' }}
             >
-              Main
+              DAO Supported
             </Button>
+          </Tooltip>
+
+          <Tooltip title="List the top 20 tokens by Price.">
             <Button
               variant={activeTableTopButton === 2 ? "contained" : "text"}
               size="small"
               onClick={() => handleTopButtonButtonClick('popular')}
               sx={{ marginRight: "10px", color: 'white' }}
             >
-              Popular
+              Highest Value
             </Button>
+          </Tooltip>
+
+          <Tooltip title="List all tokens integrated with TurtleDAO.">
             <Button
               variant={activeTableTopButton === 3 ? "contained" : "text"}
               size="small"
@@ -114,6 +128,7 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
             >
               All
             </Button>
+          </Tooltip>
           </div>
         )}
         sx={{ color: 'primary.main'}}
@@ -160,7 +175,15 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
             >
               Sort By: Marketcap
             </Button>
-
+            <Button
+              variant={"text"}
+              size="small"
+              sx={{ marginLeft: "20px", marginBottom: "10px", color: 'white' }}
+              onClick={sortByVolume}
+            >
+              Sort By: Volume
+            </Button>
+            
           <Table 
           >
             <TableHead>
@@ -184,7 +207,14 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
                   <b><center>Marketcap</center></b>
                 </TableCell>
                 <TableCell sx={{ fontWeight: 'bold', color: 'primary.main'}}>
-                  <b><center>ADA Compare</center></b>
+                  <b><center>Volume</center></b>
+                </TableCell>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main'}}>
+                  <div align='center'>
+                    <Tooltip title="Some tokens may not have decimals.">
+                      <b><center>ADA Compare</center></b>
+                    </Tooltip>
+                  </div>
                 </TableCell>
                 <TableCell sx={{ fontWeight: 'bold', color: 'primary.main'}}>
                   <b><center>TurtleDAO Support</center></b>
@@ -225,6 +255,9 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
                       <center>₳ {item.marketcap.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</center>
                     </TableCell>
                     <TableCell style={{ color: 'white' }}>
+                      <center>₳ {item.volume.toLocaleString()}</center>
+                    </TableCell>
+                    <TableCell style={{ color: 'white' }}>
                       <center>{item.to_ada.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })} {item.ticker}</center>
                     </TableCell>
                     <TableCell>
@@ -251,6 +284,7 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
                     </TableCell>
 
                     <TableCell>
+                      <center>
 
                       {
                       item.discord_link ?
@@ -265,6 +299,7 @@ export const TurtleDaoWatchlist = ({ market_data }) => {
                       :
                         null
                       }
+                      </center>
 
                     </TableCell>
                     <TableCell>
