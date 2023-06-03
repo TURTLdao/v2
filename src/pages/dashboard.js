@@ -7,13 +7,6 @@ import { TurtleDaoWatchlist } from 'src/sections/dashboard/dao-watchlist';
 
 import { MainBanner } from 'src/sections/dashboard/banners/main';
 
-export async function getStaticPaths() {
-  return {
-    paths: [], // No static paths, indicating this page doesn't need static generation
-    fallback: 'blocking', // Set fallback to 'blocking' for server-side rendering (SSR)
-  };
-}
-
 export async function getStaticProps() {
   const pairIds = [
     // DAO
@@ -225,6 +218,7 @@ export default function Page({ f_prices, f_volumes }) {
     };
   };
 
+  useEffect(() => {
   const turtle_market = calculateMarketValues(f_prices.f_turtle_price, 300000000, f_volumes.f_turtle_volume);
   const froggie_market = calculateMarketValues(f_prices.f_froggie_price, 69000000000, f_volumes.f_froggie_volume);
   const konda_market = calculateMarketValues(f_prices.f_konda_price, 84322711100, f_volumes.f_konda_volume);
@@ -250,6 +244,7 @@ export default function Page({ f_prices, f_volumes }) {
   const bank_market = calculateMarketValues(f_prices.f_bank_price, 2500000000000, f_volumes.f_bank_volume);
   const gens_market = calculateMarketValues(f_prices.f_gens_price, 100000000, f_volumes.f_gens_volume);
   const vyfi_market = calculateMarketValues(f_prices.f_vyfi_price, 450000000, f_volumes.f_vyfi_volume);
+  }, []);
 
   const complete_markets = {
     turtle_market,
