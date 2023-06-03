@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { useContext } from 'react';
+import { AppStateContext, AppStateProvider } from 'src/utils/apply-address';
 
 export const Banner = ({ walletAddress }) => {
   const theme = createTheme({

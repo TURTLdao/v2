@@ -19,33 +19,27 @@ import { BuyVerified } from 'src/sections/launchpad/buy/buy-verified';
 import { FroggiePriceChart } from 'src/sections/launchpad/charts/froggie-price';
 
 import { getLastPrice } from 'src/api/fetch-calls';
-import FroggieInformation from 'src/tokens/froggie';
 
-import useGlobalState, { walletAddress } from 'src/utils/global-const';
+import FroggieInformation from 'src/tokens/froggie';
 
 export async function getStaticProps() {
   const baseId = '79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a146524f47474945_lovelace';
 
   try {
-    let price = null;
-    while (price === null) {
-      price = await getLastPrice(baseId);
-      if (price === null) {
-        await sleep(200);
-      }
-    }
-    //const price = await getLastPrice(baseId);
+    const price = await getLastPrice(baseId);
 
     const get_history = await fetch('https://analyticsv2.muesliswap.com/price?policy-id=79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a1&tokenname=FROGGIE&interval=hourly');
     const get_history_data = await get_history.json();
     const medianArray = get_history_data.map(item => Number(item.median));
-
+    
+    
     // https://analyticsv2.muesliswap.com/price?policy-id=79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a1&tokenname=FROGGIE&interval=hourly
+  
 
     return {
       props: {
         froggie_price: price,
-        historical_price_array: medianArray,
+        historical_price_array: medianArray
       },
     };
   } catch (error) {
@@ -76,8 +70,6 @@ export default function Page({ froggie_price, historical_price_array }) {
     token_bio_information,
     token_profile_information
   } = FroggieInformation(froggie_price);
-
-  //const [ userWalletAddress ] = useGlobalState(walletAddress);
 
   // https://analyticsv2.muesliswap.com/price?policy-id=79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a1&tokenname=FROGGIE&interval=hourly
 
@@ -122,7 +114,7 @@ export default function Page({ froggie_price, historical_price_array }) {
           <Grid xs={12} sm={6} lg={3} >
             <AdaCompareCard sx={{ height: '100%', marginRight: '10px' }} tokenPrice={froggie_price} ticker={ticker} />
           </Grid>
-
+          
         </Grid>
 
 
