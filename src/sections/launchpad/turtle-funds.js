@@ -4,31 +4,9 @@ import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, Grid,
 import PropTypes from 'prop-types';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React, { useState, useEffect } from 'react';
-import { fetchAddressAssets } from 'src/api/fetch-calls';
 import { PriceCard } from './market-cards/price';
 
 export const TurtleDAOfunds = ({  }) => {
-  const [responseData, setResponseData] = useState([]);
-
-  useEffect(() => {
-    async function fetchData() {
-      const address = 'addr1qywhrwe3vufpf66n7w9ld42ths6j6j53swv9agpt3pd0u409hz67cj83lhuhgvvtu97jd3fyswqu80g0s3uuawen7kmqv4w2sg';
-
-      try {
-        const data = await fetchAddressAssets(address);
-
-        if (data) {
-          setResponseData(data);
-        } else {
-          console.log('No data available or an error occurred.');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    fetchData();
-  }, []);
 
   const theme = createTheme({
     palette: {
@@ -61,17 +39,7 @@ export const TurtleDAOfunds = ({  }) => {
               
             }}
           >
-          {responseData.map((item, index) => (
-            <Grid
-              xs={12}
-              md={6}
-              lg={4}
-              
-            >
-              <PriceCard cardTitle={item.asset_name} lastPrice={item.quantity}/>
-            </Grid>
-          ))}
-
+            
           </Box>
         </CardContent>
     
