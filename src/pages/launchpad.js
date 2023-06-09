@@ -19,7 +19,7 @@ import { LaunchpadView } from 'src/sections/launchpad/launchpad-view';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getLastPrice } from 'src/api/fetch-calls';
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const pairIds = [
     '79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a146524f47474945_lovelace', // $FROGGIE
     '501dd5d2fbab6af0a26b1421076ff3afc4d5a34d6b3f9694571116ea4b4f4e4441_lovelace',     // $KONDA
