@@ -22,7 +22,7 @@ import { useContext } from 'react';
 import { AppStateContext } from 'src/utils/apply-address';
 import { MainBanner } from 'src/sections/dashboard/banners/main';
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const pairIds = [
     // DAO
     '79906b9c8d2fbddeba9658387a2a1187f3edd8f546e5dc49225710a146524f47474945_lovelace', // $FROGGIE
