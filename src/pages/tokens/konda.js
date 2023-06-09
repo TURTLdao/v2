@@ -18,7 +18,7 @@ import { getLastPrice } from 'src/api/fetch-calls';
 
 import KondaInformation from 'src/tokens/konda';
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const baseId = '501dd5d2fbab6af0a26b1421076ff3afc4d5a34d6b3f9694571116ea4b4f4e4441_lovelace';
 
   try {
