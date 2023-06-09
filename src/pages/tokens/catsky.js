@@ -19,7 +19,7 @@ import { getLastPrice } from 'src/api/fetch-calls';
 
 import CatskyInformation from 'src/tokens/catsky';
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const baseId = '9b426921a21f54600711da0be1a12b026703a9bd8eb9848d08c9d921434154534b59_lovelace';
 
   try {
